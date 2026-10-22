@@ -1,0 +1,198 @@
+{
+  "recorded_at": "2026-10-22T22:00:10.362Z",
+  "request": "Daily539Result?period=&month=2026-10&pageNum=1&pageSize=5",
+  "response": {
+    "rtCode": 0,
+    "rtMsg": null,
+    "content": {
+      "totalSize": 19,
+      "daily539Res": [
+        {
+          "period": 115000256,
+          "lotteryDate": "2026-10-22T00:00:00",
+          "redeemableDate": "2027-01-22T00:00:00",
+          "drawNumberSize": [
+            3,
+            8,
+            14,
+            23,
+            28
+          ],
+          "drawNumberAppear": [
+            3,
+            28,
+            23,
+            14,
+            8
+          ],
+          "sellAmount": 32953350,
+          "totalAmount": 34865500,
+          "d539JackpotAssign": {
+            "winnerCount": 4,
+            "perPrize": 6000000
+          },
+          "d539SecondAssign": {
+            "winnerCount": 249,
+            "perPrize": 20000
+          },
+          "d539ThirdAssign": {
+            "winnerCount": 7153,
+            "perPrize": 300
+          },
+          "d539FourthAssign": {
+            "winnerCount": 74792,
+            "perPrize": 50
+          }
+        },
+        {
+          "period": 115000255,
+          "lotteryDate": "2026-10-21T00:00:00",
+          "redeemableDate": "2027-01-21T00:00:00",
+          "drawNumberSize": [
+            4,
+            8,
+            15,
+            18,
+            28
+          ],
+          "drawNumberAppear": [
+            4,
+            18,
+            28,
+            15,
+            8
+          ],
+          "sellAmount": 35826100,
+          "totalAmount": 10930700,
+          "d539JackpotAssign": {
+            "winnerCount": 0,
+            "perPrize": 8000000
+          },
+          "d539SecondAssign": {
+            "winnerCount": 227,
+            "perPrize": 20000
+          },
+          "d539ThirdAssign": {
+            "winnerCount": 8278,
+            "perPrize": 300
+          },
+          "d539FourthAssign": {
+            "winnerCount": 78146,
+            "perPrize": 50
+          }
+        },
+        {
+          "period": 115000254,
+          "lotteryDate": "2026-10-20T00:00:00",
+          "redeemableDate": "2027-01-20T00:00:00",
+          "drawNumberSize": [
+            1,
+            15,
+            30,
+            36,
+            38
+          ],
+          "drawNumberAppear": [
+            30,
+            36,
+            38,
+            15,
+            1
+          ],
+          "sellAmount": 34697050,
+          "totalAmount": 14948700,
+          "d539JackpotAssign": {
+            "winnerCount": 1,
+            "perPrize": 8000000
+          },
+          "d539SecondAssign": {
+            "winnerCount": 121,
+            "perPrize": 20000
+          },
+          "d539ThirdAssign": {
+            "winnerCount": 4881,
+            "perPrize": 300
+          },
+          "d539FourthAssign": {
+            "winnerCount": 61288,
+            "perPrize": 50
+          }
+        },
+        {
+          "period": 115000253,
+          "lotteryDate": "2026-10-19T00:00:00",
+          "redeemableDate": "2027-01-19T00:00:00",
+          "drawNumberSize": [
+            4,
+            12,
+            16,
+            22,
+            36
+          ],
+          "drawNumberAppear": [
+            36,
+            12,
+            4,
+            16,
+            22
+          ],
+          "sellAmount": 37929850,
+          "totalAmount": 31984050,
+          "d539JackpotAssign": {
+            "winnerCount": 2,
+            "perPrize": 8000000
+          },
+          "d539SecondAssign": {
+            "winnerCount": 429,
+            "perPrize": 20000
+          },
+          "d539ThirdAssign": {
+            "winnerCount": 10284,
+            "perPrize": 300
+          },
+          "d539FourthAssign": {
+            "winnerCount": 86377,
+            "perPrize": 50
+          }
+        },
+        {
+          "period": 115000252,
+          "lotteryDate": "2026-10-17T00:00:00",
+          "redeemableDate": "2027-01-18T00:00:00",
+          "drawNumberSize": [
+            10,
+            20,
+            26,
+            32,
+            39
+          ],
+          "drawNumberAppear": [
+            32,
+            20,
+            26,
+            39,
+            10
+          ],
+          "sellAmount": 37395850,
+          "totalAmount": 32296550,
+          "d539JackpotAssign": {
+            "winnerCount": 3,
+            "perPrize": 8000000
+          },
+          "d539SecondAssign": {
+            "winnerCount": 162,
+            "perPrize": 20000
+          },
+          "d539ThirdAssign": {
+            "winnerCount": 5715,
+            "perPrize": 300
+          },
+          "d539FourthAssign": {
+            "winnerCount": 66841,
+            "perPrize": 50
+          }
+        }
+      ]
+    }
+  }
+}

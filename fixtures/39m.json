@@ -1,0 +1,193 @@
+{
+  "recorded_at": "2026-10-22T22:00:12.584Z",
+  "request": "39M5Result?period=&month=2026-10&pageNum=1&pageSize=5",
+  "response": {
+    "rtCode": 0,
+    "rtMsg": null,
+    "content": {
+      "totalSize": 19,
+      "m539Res": [
+        {
+          "period": 115000256,
+          "lotteryDate": "2026-10-22T00:00:00",
+          "redeemableDate": "2027-01-22T00:00:00",
+          "drawNumberSize": [
+            3,
+            8,
+            14,
+            23,
+            28
+          ],
+          "drawNumberAppear": [
+            3,
+            28,
+            23,
+            14,
+            8
+          ],
+          "sellAmount": 47508900,
+          "totalAmount": 30467500,
+          "m539TwoAssign": {
+            "multiple": "60倍",
+            "perPrize": 1500,
+            "winnerCount": 17855
+          },
+          "m539ThreeAssign": {
+            "multiple": "450倍",
+            "perPrize": 11250,
+            "winnerCount": 252
+          },
+          "m539FourAssign": {
+            "multiple": "8,500倍",
+            "perPrize": 212500,
+            "winnerCount": 4
+          }
+        },
+        {
+          "period": 115000255,
+          "lotteryDate": "2026-10-21T00:00:00",
+          "redeemableDate": "2027-01-21T00:00:00",
+          "drawNumberSize": [
+            4,
+            8,
+            15,
+            18,
+            28
+          ],
+          "drawNumberAppear": [
+            4,
+            18,
+            28,
+            15,
+            8
+          ],
+          "sellAmount": 47100150,
+          "totalAmount": 46399750,
+          "m539TwoAssign": {
+            "multiple": "60倍",
+            "perPrize": 1500,
+            "winnerCount": 23204
+          },
+          "m539ThreeAssign": {
+            "multiple": "450倍",
+            "perPrize": 11250,
+            "winnerCount": 955
+          },
+          "m539FourAssign": {
+            "multiple": "8,500倍",
+            "perPrize": 212500,
+            "winnerCount": 4
+          }
+        },
+        {
+          "period": 115000254,
+          "lotteryDate": "2026-10-20T00:00:00",
+          "redeemableDate": "2027-01-20T00:00:00",
+          "drawNumberSize": [
+            1,
+            15,
+            30,
+            36,
+            38
+          ],
+          "drawNumberAppear": [
+            30,
+            36,
+            38,
+            15,
+            1
+          ],
+          "sellAmount": 46998775,
+          "totalAmount": 18169000,
+          "m539TwoAssign": {
+            "multiple": "60倍",
+            "perPrize": 1500,
+            "winnerCount": 11266
+          },
+          "m539ThreeAssign": {
+            "multiple": "450倍",
+            "perPrize": 11250,
+            "winnerCount": 94
+          },
+          "m539FourAssign": {
+            "multiple": "8,500倍",
+            "perPrize": 212500,
+            "winnerCount": 1
+          }
+        },
+        {
+          "period": 115000253,
+          "lotteryDate": "2026-10-19T00:00:00",
+          "redeemableDate": "2027-01-19T00:00:00",
+          "drawNumberSize": [
+            4,
+            12,
+            16,
+            22,
+            36
+          ],
+          "drawNumberAppear": [
+            36,
+            12,
+            4,
+            16,
+            22
+          ],
+          "sellAmount": 50510950,
+          "totalAmount": 52770250,
+          "m539TwoAssign": {
+            "multiple": "60倍",
+            "perPrize": 1500,
+            "winnerCount": 26981
+          },
+          "m539ThreeAssign": {
+            "multiple": "450倍",
+            "perPrize": 11250,
+            "winnerCount": 791
+          },
+          "m539FourAssign": {
+            "multiple": "8,500倍",
+            "perPrize": 212500,
+            "winnerCount": 16
+          }
+        },
+        {
+          "period": 115000252,
+          "lotteryDate": "2026-10-17T00:00:00",
+          "redeemableDate": "2027-01-18T00:00:00",
+          "drawNumberSize": [
+            10,
+            20,
+            26,
+            32,
+            39
+          ],
+          "drawNumberAppear": [
+            32,
+            20,
+            26,
+            39,
+            10
+          ],
+          "sellAmount": 50662800,
+          "totalAmount": 23136250,
+          "m539TwoAssign": {
+            "multiple": "60倍",
+            "perPrize": 1500,
+            "winnerCount": 13670
+          },
+          "m539ThreeAssign": {
+            "multiple": "450倍",
+            "perPrize": 11250,
+            "winnerCount": 215
+          },
+          "m539FourAssign": {
+            "multiple": "8,500倍",
+            "perPrize": 212500,
+            "winnerCount": 1
+          }
+        }
+      ]
+    }
+  }
+}

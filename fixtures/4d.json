@@ -1,0 +1,153 @@
+{
+  "recorded_at": "2026-10-22T22:00:12.094Z",
+  "request": "4DResult?period=&month=2026-10&pageNum=1&pageSize=5",
+  "response": {
+    "rtCode": 0,
+    "rtMsg": null,
+    "content": {
+      "totalSize": 19,
+      "lotto4DRes": [
+        {
+          "period": 115000256,
+          "lotteryDate": "2026-10-22T00:00:00",
+          "redeemableDate": "2027-01-22T00:00:00",
+          "drawNumberAppear": [
+            9,
+            1,
+            2,
+            6
+          ],
+          "sellAmount": 4071850,
+          "totalAmount": 3857500,
+          "lotto4DFirstAssign": {
+            "bonus": "5000倍",
+            "winnerCount": 21,
+            "perPrize": 50000
+          },
+          "lotto4DSecondAssign": {
+            "bonus": "1200倍",
+            "winnerCount": 307,
+            "perPrize": 5000
+          },
+          "lotto4DThirdAssign": {
+            "bonus": "800倍",
+            "winnerCount": 2545,
+            "perPrize": 500
+          }
+        },
+        {
+          "period": 115000255,
+          "lotteryDate": "2026-10-21T00:00:00",
+          "redeemableDate": "2027-01-21T00:00:00",
+          "drawNumberAppear": [
+            4,
+            9,
+            1,
+            4
+          ],
+          "sellAmount": 4140525,
+          "totalAmount": 2107500,
+          "lotto4DFirstAssign": {
+            "bonus": "5000倍",
+            "winnerCount": 12,
+            "perPrize": 50000
+          },
+          "lotto4DSecondAssign": {
+            "bonus": "1200倍",
+            "winnerCount": 111,
+            "perPrize": 5000
+          },
+          "lotto4DThirdAssign": {
+            "bonus": "800倍",
+            "winnerCount": 1905,
+            "perPrize": 500
+          }
+        },
+        {
+          "period": 115000254,
+          "lotteryDate": "2026-10-20T00:00:00",
+          "redeemableDate": "2027-01-20T00:00:00",
+          "drawNumberAppear": [
+            7,
+            7,
+            5,
+            2
+          ],
+          "sellAmount": 4139600,
+          "totalAmount": 1443500,
+          "lotto4DFirstAssign": {
+            "bonus": "5000倍",
+            "winnerCount": 8,
+            "perPrize": 50000
+          },
+          "lotto4DSecondAssign": {
+            "bonus": "1200倍",
+            "winnerCount": 102,
+            "perPrize": 5000
+          },
+          "lotto4DThirdAssign": {
+            "bonus": "800倍",
+            "winnerCount": 1067,
+            "perPrize": 500
+          }
+        },
+        {
+          "period": 115000253,
+          "lotteryDate": "2026-10-19T00:00:00",
+          "redeemableDate": "2027-01-19T00:00:00",
+          "drawNumberAppear": [
+            9,
+            6,
+            9,
+            9
+          ],
+          "sellAmount": 4430700,
+          "totalAmount": 3449500,
+          "lotto4DFirstAssign": {
+            "bonus": "5000倍",
+            "winnerCount": 18,
+            "perPrize": 50000
+          },
+          "lotto4DSecondAssign": {
+            "bonus": "1200倍",
+            "winnerCount": 224,
+            "perPrize": 5000
+          },
+          "lotto4DThirdAssign": {
+            "bonus": "800倍",
+            "winnerCount": 2859,
+            "perPrize": 500
+          }
+        },
+        {
+          "period": 115000252,
+          "lotteryDate": "2026-10-17T00:00:00",
+          "redeemableDate": "2027-01-18T00:00:00",
+          "drawNumberAppear": [
+            0,
+            4,
+            5,
+            7
+          ],
+          "sellAmount": 4284500,
+          "totalAmount": 2128500,
+          "lotto4DFirstAssign": {
+            "bonus": "5000倍",
+            "winnerCount": 10,
+            "perPrize": 50000
+          },
+          "lotto4DSecondAssign": {
+            "bonus": "1200倍",
+            "winnerCount": 123,
+            "perPrize": 5000
+          },
+          "lotto4DThirdAssign": {
+            "bonus": "800倍",
+            "winnerCount": 2027,
+            "perPrize": 500
+          }
+        }
+      ]
+    }
+  }
+}

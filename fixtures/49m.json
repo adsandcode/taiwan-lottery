@@ -1,0 +1,203 @@
+{
+  "recorded_at": "2026-10-22T22:00:13.129Z",
+  "request": "49M6Result?period=&month=2026-10&pageNum=1&pageSize=5",
+  "response": {
+    "rtCode": 0,
+    "rtMsg": null,
+    "content": {
+      "totalSize": 6,
+      "m649Res": [
+        {
+          "period": 115000098,
+          "lotteryDate": "2026-10-20T00:00:00",
+          "redeemableDate": "2027-01-20T00:00:00",
+          "drawNumberSize": [
+            2,
+            5,
+            19,
+            33,
+            40,
+            43
+          ],
+          "drawNumberAppear": [
+            2,
+            43,
+            19,
+            33,
+            5,
+            40
+          ],
+          "sellAmount": 8680400,
+          "totalAmount": 2590000,
+          "m649TwoAssign": {
+            "multiple": "50倍",
+            "perPrize": 1250,
+            "winnerCount": 1552
+          },
+          "m649ThreeAssign": {
+            "multiple": "500倍",
+            "perPrize": 12500,
+            "winnerCount": 52
+          },
+          "m649FourAssign": {
+            "multiple": "8,000倍",
+            "perPrize": 200000,
+            "winnerCount": 0
+          }
+        },
+        {
+          "period": 115000097,
+          "lotteryDate": "2026-10-16T00:00:00",
+          "redeemableDate": "2027-01-18T00:00:00",
+          "drawNumberSize": [
+            6,
+            15,
+            21,
+            40,
+            43,
+            49
+          ],
+          "drawNumberAppear": [
+            21,
+            15,
+            40,
+            49,
+            6,
+            43
+          ],
+          "sellAmount": 8883550,
+          "totalAmount": 3901250,
+          "m649TwoAssign": {
+            "multiple": "50倍",
+            "perPrize": 1250,
+            "winnerCount": 2041
+          },
+          "m649ThreeAssign": {
+            "multiple": "500倍",
+            "perPrize": 12500,
+            "winnerCount": 44
+          },
+          "m649FourAssign": {
+            "multiple": "8,000倍",
+            "perPrize": 200000,
+            "winnerCount": 4
+          }
+        },
+        {
+          "period": 115000096,
+          "lotteryDate": "2026-10-13T00:00:00",
+          "redeemableDate": "2027-01-13T00:00:00",
+          "drawNumberSize": [
+            3,
+            31,
+            35,
+            36,
+            47,
+            48
+          ],
+          "drawNumberAppear": [
+            31,
+            35,
+            48,
+            3,
+            36,
+            47
+          ],
+          "sellAmount": 9293625,
+          "totalAmount": 2917500,
+          "m649TwoAssign": {
+            "multiple": "50倍",
+            "perPrize": 1250,
+            "winnerCount": 1764
+          },
+          "m649ThreeAssign": {
+            "multiple": "500倍",
+            "perPrize": 12500,
+            "winnerCount": 25
+          },
+          "m649FourAssign": {
+            "multiple": "8,000倍",
+            "perPrize": 200000,
+            "winnerCount": 2
+          }
+        },
+        {
+          "period": 115000095,
+          "lotteryDate": "2026-10-09T00:00:00",
+          "redeemableDate": "2027-01-11T00:00:00",
+          "drawNumberSize": [
+            3,
+            9,
+            11,
+            25,
+            34,
+            41
+          ],
+          "drawNumberAppear": [
+            11,
+            34,
+            3,
+            9,
+            41,
+            25
+          ],
+          "sellAmount": 10006100,
+          "totalAmount": 8886250,
+          "m649TwoAssign": {
+            "multiple": "50倍",
+            "perPrize": 1250,
+            "winnerCount": 3919
+          },
+          "m649ThreeAssign": {
+            "multiple": "500倍",
+            "perPrize": 12500,
+            "winnerCount": 191
+          },
+          "m649FourAssign": {
+            "multiple": "8,000倍",
+            "perPrize": 200000,
+            "winnerCount": 8
+          }
+        },
+        {
+          "period": 115000094,
+          "lotteryDate": "2026-10-06T00:00:00",
+          "redeemableDate": "2027-01-06T00:00:00",
+          "drawNumberSize": [
+            4,
+            6,
+            20,
+            32,
+            36,
+            39
+          ],
+          "drawNumberAppear": [
+            39,
+            20,
+            32,
+            6,
+            36,
+            4
+          ],
+          "sellAmount": 10254000,
+          "totalAmount": 5023750,
+          "m649TwoAssign": {
+            "multiple": "50倍",
+            "perPrize": 1250,
+            "winnerCount": 2709
+          },
+          "m649ThreeAssign": {
+            "multiple": "500倍",
+            "perPrize": 12500,
+            "winnerCount": 99
+          },
+          "m649FourAssign": {
+            "multiple": "8,000倍",
+            "perPrize": 200000,
+            "winnerCount": 2
+          }
+        }
+      ]
+    }
+  }
+}

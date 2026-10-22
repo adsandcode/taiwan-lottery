@@ -1,0 +1,233 @@
+{
+  "recorded_at": "2026-10-22T22:00:13.583Z",
+  "request": "38M6Result?period=&month=2023-12&pageNum=1&pageSize=5",
+  "response": {
+    "rtCode": 0,
+    "rtMsg": null,
+    "content": {
+      "totalSize": 8,
+      "m638Res": [
+        {
+          "period": 112000104,
+          "lotteryDate": "2023-12-28T00:00:00",
+          "redeemableDate": "2024-03-28T00:00:00",
+          "drawNumberSize": [
+            7,
+            8,
+            18,
+            20,
+            23,
+            31
+          ],
+          "drawNumberAppear": [
+            31,
+            23,
+            7,
+            8,
+            18,
+            20
+          ],
+          "totalAmount": 1911000,
+          "sellAmount": 4241525,
+          "jackpot": 0,
+          "fiveMatchAssign": {
+            "multiple": "46,000倍",
+            "winnerCount": 0,
+            "perPrize": 1150000
+          },
+          "fourMatchAssign": {
+            "multiple": "2,700倍",
+            "winnerCount": 1,
+            "perPrize": 67500
+          },
+          "threeMatchAssign": {
+            "multiple": "230倍",
+            "winnerCount": 105,
+            "perPrize": 5750
+          },
+          "twoMatchAssign": {
+            "multiple": "30倍",
+            "winnerCount": 1653,
+            "perPrize": 750
+          }
+        },
+        {
+          "period": 112000103,
+          "lotteryDate": "2023-12-25T00:00:00",
+          "redeemableDate": "2024-03-25T00:00:00",
+          "drawNumberSize": [
+            5,
+            7,
+            16,
+            19,
+            20,
+            32
+          ],
+          "drawNumberAppear": [
+            32,
+            5,
+            20,
+            7,
+            16,
+            19
+          ],
+          "totalAmount": 1495250,
+          "sellAmount": 4051425,
+          "jackpot": 0,
+          "fiveMatchAssign": {
+            "multiple": "46,000倍",
+            "winnerCount": 0,
+            "perPrize": 1150000
+          },
+          "fourMatchAssign": {
+            "multiple": "2,700倍",
+            "winnerCount": 5,
+            "perPrize": 67500
+          },
+          "threeMatchAssign": {
+            "multiple": "230倍",
+            "winnerCount": 46,
+            "perPrize": 5750
+          },
+          "twoMatchAssign": {
+            "multiple": "30倍",
+            "winnerCount": 1191,
+            "perPrize": 750
+          }
+        },
+        {
+          "period": 112000102,
+          "lotteryDate": "2023-12-21T00:00:00",
+          "redeemableDate": "2024-03-21T00:00:00",
+          "drawNumberSize": [
+            3,
+            10,
+            13,
+            34,
+            37,
+            38
+          ],
+          "drawNumberAppear": [
+            13,
+            38,
+            34,
+            3,
+            10,
+            37
+          ],
+          "totalAmount": 3411750,
+          "sellAmount": 3761650,
+          "jackpot": 0,
+          "fiveMatchAssign": {
+            "multiple": "46,000倍",
+            "winnerCount": 0,
+            "perPrize": 1150000
+          },
+          "fourMatchAssign": {
+            "multiple": "2,700倍",
+            "winnerCount": 12,
+            "perPrize": 67500
+          },
+          "threeMatchAssign": {
+            "multiple": "230倍",
+            "winnerCount": 159,
+            "perPrize": 5750
+          },
+          "twoMatchAssign": {
+            "multiple": "30倍",
+            "winnerCount": 2250,
+            "perPrize": 750
+          }
+        },
+        {
+          "period": 112000101,
+          "lotteryDate": "2023-12-18T00:00:00",
+          "redeemableDate": "2024-03-18T00:00:00",
+          "drawNumberSize": [
+            5,
+            18,
+            20,
+            24,
+            31,
+            36
+          ],
+          "drawNumberAppear": [
+            18,
+            24,
+            31,
+            20,
+            5,
+            36
+          ],
+          "totalAmount": 2373000,
+          "sellAmount": 4004900,
+          "jackpot": 0,
+          "fiveMatchAssign": {
+            "multiple": "46,000倍",
+            "winnerCount": 0,
+            "perPrize": 1150000
+          },
+          "fourMatchAssign": {
+            "multiple": "2,700倍",
+            "winnerCount": 7,
+            "perPrize": 67500
+          },
+          "threeMatchAssign": {
+            "multiple": "230倍",
+            "winnerCount": 84,
+            "perPrize": 5750
+          },
+          "twoMatchAssign": {
+            "multiple": "30倍",
+            "winnerCount": 1890,
+            "perPrize": 750
+          }
+        },
+        {
+          "period": 112000100,
+          "lotteryDate": "2023-12-14T00:00:00",
+          "redeemableDate": "2024-03-14T00:00:00",
+          "drawNumberSize": [
+            4,
+            16,
+            17,
+            19,
+            32,
+            35
+          ],
+          "drawNumberAppear": [
+            19,
+            32,
+            4,
+            16,
+            35,
+            17
+          ],
+          "totalAmount": 1641750,
+          "sellAmount": 4017725,
+          "jackpot": 0,
+          "fiveMatchAssign": {
+            "multiple": "46,000倍",
+            "winnerCount": 0,
+            "perPrize": 1150000
+          },
+          "fourMatchAssign": {
+            "multiple": "2,700倍",
+            "winnerCount": 8,
+            "perPrize": 67500
+          },
+          "threeMatchAssign": {
+            "multiple": "230倍",
+            "winnerCount": 63,
+            "perPrize": 5750
+          },
+          "twoMatchAssign": {
+            "multiple": "30倍",
+            "winnerCount": 986,
+            "perPrize": 750
+          }
+        }
+      ]
+    }
+  }
+}

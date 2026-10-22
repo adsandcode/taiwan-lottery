@@ -1,0 +1,148 @@
+{
+  "recorded_at": "2026-10-22T22:00:11.665Z",
+  "request": "3DResult?period=&month=2026-10&pageNum=1&pageSize=5",
+  "response": {
+    "rtCode": 0,
+    "rtMsg": null,
+    "content": {
+      "totalSize": 19,
+      "lotto3DRes": [
+        {
+          "period": 115000256,
+          "lotteryDate": "2026-10-22T00:00:00",
+          "redeemableDate": "2027-01-22T00:00:00",
+          "drawNumberAppear": [
+            0,
+            7,
+            3
+          ],
+          "sellAmount": 2101775,
+          "totalAmount": 896400,
+          "lotto3DFirstAssign": {
+            "bonus": "500倍",
+            "winnerCount": 45,
+            "perPrize": 5000
+          },
+          "lotto3DSecondAssign": {
+            "bonus": "160倍",
+            "winnerCount": 574,
+            "perPrize": 500
+          },
+          "lotto3DThirdAssign": {
+            "bonus": "80倍",
+            "winnerCount": 7688,
+            "perPrize": 50
+          }
+        },
+        {
+          "period": 115000255,
+          "lotteryDate": "2026-10-21T00:00:00",
+          "redeemableDate": "2027-01-21T00:00:00",
+          "drawNumberAppear": [
+            5,
+            5,
+            6
+          ],
+          "sellAmount": 2173375,
+          "totalAmount": 954450,
+          "lotto3DFirstAssign": {
+            "bonus": "500倍",
+            "winnerCount": 64,
+            "perPrize": 5000
+          },
+          "lotto3DSecondAssign": {
+            "bonus": "160倍",
+            "winnerCount": 621,
+            "perPrize": 500
+          },
+          "lotto3DThirdAssign": {
+            "bonus": "80倍",
+            "winnerCount": 6479,
+            "perPrize": 50
+          }
+        },
+        {
+          "period": 115000254,
+          "lotteryDate": "2026-10-20T00:00:00",
+          "redeemableDate": "2027-01-20T00:00:00",
+          "drawNumberAppear": [
+            8,
+            7,
+            0
+          ],
+          "sellAmount": 2152175,
+          "totalAmount": 1170650,
+          "lotto3DFirstAssign": {
+            "bonus": "500倍",
+            "winnerCount": 106,
+            "perPrize": 5000
+          },
+          "lotto3DSecondAssign": {
+            "bonus": "160倍",
+            "winnerCount": 600,
+            "perPrize": 500
+          },
+          "lotto3DThirdAssign": {
+            "bonus": "80倍",
+            "winnerCount": 6813,
+            "perPrize": 50
+          }
+        },
+        {
+          "period": 115000253,
+          "lotteryDate": "2026-10-19T00:00:00",
+          "redeemableDate": "2027-01-19T00:00:00",
+          "drawNumberAppear": [
+            7,
+            6,
+            1
+          ],
+          "sellAmount": 2353925,
+          "totalAmount": 1078150,
+          "lotto3DFirstAssign": {
+            "bonus": "500倍",
+            "winnerCount": 55,
+            "perPrize": 5000
+          },
+          "lotto3DSecondAssign": {
+            "bonus": "160倍",
+            "winnerCount": 781,
+            "perPrize": 500
+          },
+          "lotto3DThirdAssign": {
+            "bonus": "80倍",
+            "winnerCount": 8253,
+            "perPrize": 50
+          }
+        },
+        {
+          "period": 115000252,
+          "lotteryDate": "2026-10-17T00:00:00",
+          "redeemableDate": "2027-01-18T00:00:00",
+          "drawNumberAppear": [
+            6,
+            1,
+            1
+          ],
+          "sellAmount": 2241200,
+          "totalAmount": 1660050,
+          "lotto3DFirstAssign": {
+            "bonus": "500倍",
+            "winnerCount": 99,
+            "perPrize": 5000
+          },
+          "lotto3DSecondAssign": {
+            "bonus": "160倍",
+            "winnerCount": 1636,
+            "perPrize": 500
+          },
+          "lotto3DThirdAssign": {
+            "bonus": "80倍",
+            "winnerCount": 6941,
+            "perPrize": 50
+          }
+        }
+      ]
+    }
+  }
+}

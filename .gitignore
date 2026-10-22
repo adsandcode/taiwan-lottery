@@ -1,0 +1,9 @@
+node_modules/
+dist/
+*.tsbuildinfo
+*.tgz
+.DS_Store
+__pycache__/
+
+# Local-only tooling: the leak scanner carries its own private word list. Never published.
+.private/
