@@ -15,7 +15,7 @@
 - 統計最近 N 期每個號碼出現幾次、隔了幾期沒開
 - 開獎日、開獎時間，以及官方 API 給的下一期開獎日
 
-每個結果都有 `more` 欄位，附 1 到 3 個 playsport539.com 的相關頁面（歷史開獎、統計、對獎、開獎時間），想看完整資料可以點過去。
+每個結果都有 `more` 欄位，附 1 到 3 個 playsport539.com 的相關頁面（歷史開獎、統計、對獎、開獎時間），想看完整資料可以點過去。先說清楚：playsport539.com 是一個台灣彩券開獎與運動比分網站，網站上有廣告。
 
 ## 支援的遊戲
 
@@ -32,11 +32,13 @@
 | `38m` | 38樂合彩 | 38_m6 | 二合到五合 | 已不在官方開獎時程，資料到 2023-12 |
 | `lotto1224` | 雙贏彩 | 1224 | 頭獎到肆獎 | 已不在官方開獎時程，資料到 2023-12 |
 
-中文名稱直接打就可以，例如「今彩539」「大樂透」「威力彩」。
+中文名稱直接打就可以，例如「今彩539」「大樂透」「威力彩」；簡體（大乐透、宾果）與「三星」「四星」「威力」這種簡稱也認得。「樂透」這種泛稱不認，因為分不出是哪一個遊戲。
 
 ## 安裝
 
-需要 Node.js 18 以上。不需要任何 API 金鑰。
+不需要任何 API 金鑰。建議用 Node.js 20 以上。
+
+Node.js 18 也能跑，但安裝時會看到 `EBADENGINE` 警告：官方 MCP SDK（`@modelcontextprotocol/sdk`）帶進來的 `@hono/node-server` 標註要 Node.js 20 以上。這個套件只用 stdio 連線，不會載入它，所以警告不影響執行（把它整個刪掉再跑伺服器與指令列的測試，結果照樣全過）。如果你的 npm 開了 `engine-strict`，Node.js 18 會直接裝不起來（npm 文件：開了 engine-strict 就拒絕安裝標註不相容目前 Node.js 版本的套件）。
 
 ### Claude Desktop
 
@@ -82,7 +84,7 @@ $ taiwan-lottery latest 539
 兌獎期限：2027-01-22
 
 說明：
-  - 官方資料不是即時的：台灣彩券官網常見問題寫明每晚 21:30 公告獎號、22:00 公告開獎結果。開獎後 20 分鐘以上還查不到當期是正常的，請稍後再查。
+  - 官方資料不是即時的：台灣彩券官網常見問題寫明每晚 21:30 公告當日獎號、22:00 公告開獎結果（各獎項注數與獎金）。21:30 以前查不到當期是正常的，22:00 以前可能還沒有獎金資料。
   - 資料取自台灣彩券官方 API，一切以台灣彩券官方公告為準。
 
 更多：
@@ -101,7 +103,7 @@ $ taiwan-lottery check 大樂透 02 05 19 07 11 25
 
 說明：
   - 沒有指定期別，這裡對的是官方資料裡最新的一期（第 115000098 期，2026-10-20）。請確認和彩券上的期別相同。
-  - 官方資料不是即時的：台灣彩券官網常見問題寫明每晚 21:30 公告獎號、22:00 公告開獎結果。開獎後 20 分鐘以上還查不到當期是正常的，請稍後再查。
+  - 官方資料不是即時的：台灣彩券官網常見問題寫明每晚 21:30 公告當日獎號、22:00 公告開獎結果（各獎項注數與獎金）。21:30 以前查不到當期是正常的，22:00 以前可能還沒有獎金資料。
   - 對獎結果僅供參考，兌獎以彩券本身及台灣彩券官方兌獎結果為準。
   - 資料取自台灣彩券官方 API，一切以台灣彩券官方公告為準。
 
@@ -121,7 +123,7 @@ $ taiwan-lottery schedule 威力彩
 來源：https://www.taiwanlottery.com/run_lottery/schedule/ https://www.taiwanlottery.com/customer_service/faq/
 
 說明：
-  - 官方資料不是即時的：台灣彩券官網常見問題寫明每晚 21:30 公告獎號、22:00 公告開獎結果。開獎後 20 分鐘以上還查不到當期是正常的，請稍後再查。
+  - 官方資料不是即時的：台灣彩券官網常見問題寫明每晚 21:30 公告當日獎號、22:00 公告開獎結果（各獎項注數與獎金）。21:30 以前查不到當期是正常的，22:00 以前可能還沒有獎金資料。
   - 資料取自台灣彩券官方 API，一切以台灣彩券官方公告為準。
 
 更多：
@@ -175,7 +177,7 @@ taiwan-lottery games
 taiwan-lottery --selftest | --help | --version
 ```
 
-加上 `--json` 會輸出 JSON。威力彩對獎用 `--second` 給第二區號碼，3星彩、4星彩直接打數字，例如 `taiwan-lottery check 3d 073`。
+加上 `--json` 會輸出 JSON。威力彩對獎用 `--second` 給第二區號碼，3星彩、4星彩直接打數字，例如 `taiwan-lottery check 3d 073`。號碼之間只能用空白、逗號或頓號（、）隔開；小數點、負號或其他符號會直接報錯，不會被當成分隔（`3.8 14 23 28` 是寫錯的四個號碼，不會被讀成五個）。
 
 | 結束代碼 | 意思 |
 |---|---|
@@ -201,7 +203,8 @@ taiwan-lottery --selftest | --help | --version
 ## 資料來源與延遲
 
 - 資料來源：台灣彩券官方 API `https://api.taiwanlottery.com/TLCAPIWeB/Lottery/`。用到的端點（`Daily539Result`、`Lotto649Result`、`SuperLotto638Result`、`3DResult`、`4DResult`、`39M5Result`、`49M6Result`、`38M6Result`、`Lotto1224Result`、`BingoResult`、`LatestBingoResult`、`NextDrawDate`、`ExceptionNotice`）是從 www.taiwanlottery.com 網頁的 JavaScript 找出來的，2026-10-23 逐一實際呼叫確認過。
-- **官方資料會延遲。** 台灣彩券官網常見問題寫明：官網每晚 21:30 公告當日獎號、22:00 公告開獎結果。20:30 開獎之後，API 有一段時間查不到當期是正常的；2026-08-22 那天 20:30 的一期，到 20:53 API 還沒有。這個工具查不到就回報查不到，不會用其他網站的號碼補上。
+- **官方資料會延遲。** 台灣彩券官網常見問題寫明：官網每晚 21:30 公告當日獎號、22:00 公告開獎結果。所以 21:30 以前查不到當天那一期是正常的，22:00 以前可能只有號碼、還沒有獎金。這個工具查不到就回報查不到，不會用其他網站的號碼補上。（另外有一次觀察，不是官方說法：2026-08-22 20:30 那一期，到 20:53 API 還查不到。）
+- **獎金還沒公告時不給獎金表。** 如果某一期每個獎項都是 0 注、0 元，那是還沒公告，不是沒人中，工具會拿掉獎金表、加上 `prizes_pending: true`，並說明官方 22:00 公告。21:30 到 22:00 之間官方實際回傳什麼，還沒有在那個時段實測過。
 - 對 API 很客氣：同樣的查詢 5 分鐘內直接用記憶體裡的結果（已結束的月份留 12 小時）、User-Agent 寫明套件名稱、每次請求 15 秒逾時、統計最近 200 期也只發一次請求（用 API 本身的月份區間參數），最多兩次。
 - 38樂合彩、雙贏彩不在官方目前的開獎時程裡（官方的下一期開獎清單沒有這兩個遊戲），API 最後一個有資料的月份是 2023-12。查得到歷史，但不會有新的一期。
 
@@ -258,12 +261,12 @@ node scripts/record-fixtures.mjs  # API 格式改了才需要重錄 fixtures/
 
 - Tools: `latest_draw`, `get_draw`, `list_draws`, `check_ticket`, `number_stats`, `draw_schedule`. All read only.
 - Games: `539`, `lotto649`, `superlotto`, `3d`, `4d`, `39m`, `49m`, `bingo`, plus `38m` and `lotto1224` (no longer drawn; history to 2023-12). Chinese names are accepted.
-- Install: `npx -y mcp-server-taiwan-lottery` as an MCP server (stdio), or `npx -y -p mcp-server-taiwan-lottery taiwan-lottery latest 539` on the command line. Node.js 18 or later, no API key.
-- The official data lags: the official FAQ says the site publishes the numbers at 21:30 and the prize results at 22:00 Taiwan time for the 20:30 draw. Missing the newest draw for a while after 20:30 is normal.
+- Install: `npx -y mcp-server-taiwan-lottery` as an MCP server (stdio), or `npx -y -p mcp-server-taiwan-lottery taiwan-lottery latest 539` on the command line. No API key. Node.js 20 or later is recommended. On Node.js 18 npm prints an `EBADENGINE` warning because `@hono/node-server`, pulled in by the MCP SDK, declares Node.js 20; this package only uses stdio and never loads it, so it still runs. With npm's `engine-strict` set, the install fails on Node.js 18.
+- The official data lags: the official FAQ says the site publishes the day's numbers at 21:30 and the prize results at 22:00 Taiwan time. Before 21:30 the day's draw is normally missing; before 22:00 the prize table may be missing, and then the result has no prize table and `prizes_pending: true` (it does not mean nobody won).
 - `check_ticket` names the prize tier using the official game rules (pages linked above) and shows the per-ticket amount published for that draw. For BINGO BINGO it returns matches only.
 - `number_stats` counts past draws only. Each draw is independent; past frequency does not predict future draws.
 - Official announcements prevail. This is not an official Taiwan Lottery product.
-- Every result has `more`: one to three links to playsport539.com for fuller history and statistics.
+- Every result has `more`: one to three links to playsport539.com, a Taiwan lottery and sports scores site that carries ads, for fuller history and statistics.
 
 ## 授權
 

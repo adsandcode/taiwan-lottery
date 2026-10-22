@@ -26,13 +26,29 @@ import { LotteryClient, USER_AGENT, type FetchLike, type FetchResponseLike } fro
 import { LotteryService, NOTICE } from "./service.js";
 import { InputError, NotFoundError, UpstreamError } from "./errors.js";
 import { FIXTURE_FILES, fixtureResponse } from "./fixtures.js";
+import { LAG_NOTE } from "./service.js";
+import { formatDraw } from "./format.js";
+import { TOOLS } from "./tools.js";
 
 type Json = Record<string, any>; // eslint-disable-line @typescript-eslint/no-explicit-any
 
 const J = (v: unknown) => JSON.stringify(v);
 
 /** A stand-in for the official API that answers from the recorded fixtures. */
-export function mockApi(fail?: "http500" | "rtcode" | "throw" | "hang" | "badjson") {
+/** A copy of a recorded response with every prize tier set to 0 winners and 0 NTD (how a draw looks before 22:00). */
+export function zeroPrizes(body: Json): Json {
+  for (const list of Object.values(body.content ?? {}))
+    if (Array.isArray(list))
+      for (const item of list as Json[])
+        for (const v of Object.values(item))
+          if (v && typeof v === "object" && !Array.isArray(v) && "winnerCount" in v) {
+            (v as Json).winnerCount = 0;
+            (v as Json).perPrize = 0;
+          }
+  return body;
+}
+
+export function mockApi(fail?: "http500" | "rtcode" | "throw" | "hang" | "badjson" | "pending") {
   const calls: { url: string; headers: Record<string, string> }[] = [];
   const ok = (body: unknown): FetchResponseLike => ({ ok: true, status: 200, json: async () => body });
   const fetch: FetchLike = async (url, init) => {
@@ -48,7 +64,7 @@ export function mockApi(fail?: "http500" | "rtcode" | "throw" | "hang" | "badjso
     if (endpoint === "ExceptionNotice") return ok({ rtCode: 0, rtMsg: null, content: { exceptions: [] } });
     const file = FIXTURE_FILES[endpoint];
     if (!file) return { ok: false, status: 404, json: async () => ({}) };
-    const body = fixtureResponse(file) as Json;
+    const body = fail === "pending" ? zeroPrizes(fixtureResponse(file) as Json) : (fixtureResponse(file) as Json);
     const period = u.searchParams.get("period");
     const pageSize = Number(u.searchParams.get("pageSize") ?? "0");
     for (const key of Object.keys(body.content ?? {})) {
@@ -102,6 +118,11 @@ export async function run(log: (s: string) => void = console.log): Promise<boole
     ["3星彩", "3d"], ["三星彩", "3d"], ["4D", "4d"], ["四星彩", "4d"], ["39樂合彩", "39m"], ["49樂合彩", "49m"],
     ["38樂合彩", "38m"], ["雙贏彩", "lotto1224"], ["賓果賓果", "bingo"], ["BINGO BINGO", "bingo"], [" 539 ", "539"],
     ["今彩540", null], ["", null], ["樂透", null], ["lotto", null], ["彩券", null], ["1234", null], ["38", null],
+    // Simplified Chinese and short forms that cannot be confused with another game.
+    ["大乐透", "lotto649"], ["双赢彩", "lotto1224"], ["宾果宾果", "bingo"], ["宾果", "bingo"], ["39乐合彩", "39m"],
+    ["49乐合彩", "49m"], ["38乐合彩", "38m"], ["三星", "3d"], ["四星", "4d"], ["威力", "superlotto"],
+    // Generic words stay unknown.
+    ["乐透", null], ["彩票", null],
   ];
   for (const [input, want] of aliasCases) eq(`resolve ${J(input)}`, resolveGame(input)?.id ?? null, want);
   record(GAME_IDS.every((id) => GAMES[id].id === id), "every game id maps to its own definition");
@@ -288,6 +309,42 @@ export async function run(log: (s: string) => void = console.log): Promise<boole
   eq("string with commas and full-width digits", readTicket("539", "３,８,14,23,28").numbers, [3, 8, 14, 23, 28]);
   eq("3星彩 digits keep a leading zero", readTicket("3d", "0 7 3").numbers, [0, 7, 3]);
   eq("3星彩 digits may repeat", readTicket("3d", "777").numbers, [7, 7, 7]);
+
+  log("  ticket strings: only spaces, commas and 、 separate numbers");
+  // Each of these was read as a five-number ticket before (any non-digit was a separator) and judged 頭獎.
+  await throws("a decimal point is not a separator: 3.8 14 23 28", () => readTicket("539", "3.8 14 23 28"), InputError, "「.」");
+  await throws("a minus sign is refused: -3 8 14 23 28", () => readTicket("539", "-3 8 14 23 28"), InputError, "「-」");
+  await throws("a stray symbol is refused: 3 8 14 23 28 ×", () => readTicket("539", "3 8 14 23 28 ×"), InputError, "「×」");
+  await throws("the CLI case: -1 2 3 4 5", () => readTicket("539", "-1 2 3 4 5"), InputError, "「-」");
+  await throws("a letter is refused", () => readTicket("539", "3 8 14 23 2a8"), InputError, "「a」");
+  await throws("3星彩 with dashes is refused: 0-7-3", () => readTicket("3d", "0-7-3"), InputError, "「-」");
+  await throws("3星彩 with a leading minus is refused: -073", () => readTicket("3d", "-073"), InputError, "「-」");
+  await throws("3星彩 mixing a two-digit group and a digit: 07 3", () => readTicket("3d", "07 3"), InputError);
+  await throws("array element with a decimal point", () => readTicket("539", [3, 8, 14, 23, "2.8"]), InputError);
+  await throws("array element with a minus sign", () => readTicket("539", ["-3", 8, 14, 23, 28]), InputError);
+  await throws("array element that is not an integer", () => readTicket("539", [3, 8, 14, 23, 28.5]), InputError);
+  eq("full-width comma, 、 and tabs still work", readTicket("539", "3，8、14\t23,28").numbers, [3, 8, 14, 23, 28]);
+  eq("full-width digits still work", readTicket("539", "３ ８ １４ ２３ ２８").numbers, [3, 8, 14, 23, 28]);
+  eq("array of digit strings still works", readTicket("539", ["03", "08", 14, 23, 28]).numbers, [3, 8, 14, 23, 28]);
+  eq("3星彩 digits separated by commas", readTicket("3d", "0,7,3").numbers, [0, 7, 3]);
+
+  log("  the lag note follows the official FAQ");
+  record(LAG_NOTE.includes("21:30") && LAG_NOTE.includes("22:00") && LAG_NOTE.includes("21:30 以前"), "says 21:30 numbers, 22:00 prizes, missing before 21:30 is normal");
+  record(!LAG_NOTE.includes("20 分鐘"), "does not claim a 20-minute delay of its own");
+
+  log("  prize table not published yet (all tiers 0 winners, 0 NTD)");
+  const pendingBody = zeroPrizes(fixtureResponse("539.json") as Json);
+  const pending = parseResultList("539", pendingBody).draws[0];
+  eq("all-zero prize table is not passed on as a table", [pending.prizes, pending.prizes_pending], [undefined, true]);
+  eq("numbers are still there", pending.numbers, [3, 8, 14, 23, 28]);
+  eq("a real table with an unwon jackpot (0 winners, 0 NTD) is kept", [d649[0].prizes?.length, d649[0].prizes_pending], [8, undefined]);
+  record(formatDraw({ game: "539", draw: pending }).includes("尚未公告"), "CLI text says the prizes are not published yet");
+  record(!formatDraw({ game: "539", draw: pending }).includes("0 注"), "CLI text shows no 0-winner rows");
+
+  log("  tool descriptions say what the links are");
+  const host = new URL(COMPANION_SITE).host;
+  for (const t of TOOLS)
+    record(t.description.includes(host) && t.description.includes("ads") && t.description.includes("廣告"), `${t.name} names ${host} and says it carries ads (English and Chinese)`);
 
   // ---------------------------------------------------------------------
   log("  frequency statistics");
@@ -486,6 +543,16 @@ export async function run(log: (s: string) => void = console.log): Promise<boole
   await throws("network failure", () => fresh("throw").service.latestDraw({ game: "539" }), UpstreamError, "連不上");
   await throws("not JSON", () => fresh("badjson").service.latestDraw({ game: "539" }), UpstreamError, "不是 JSON");
   await throws("timeout", () => fresh("hang", () => FIXED_NOW, 30).service.latestDraw({ game: "539" }), UpstreamError, "秒");
+
+  {
+    const { service } = fresh("pending");
+    const l = await service.latestDraw({ game: "539" });
+    eq("latest while prizes are not published: no prize table", [l.draw.prizes, l.draw.prizes_pending], [undefined, true]);
+    record(l.notes.some((n) => n.includes("尚未公告") && n.includes("22:00")), "and a note that prizes come at 22:00");
+    const c = await service.checkTicket({ game: "539", numbers: [3, 8, 14, 23, 28] });
+    eq("check while prizes are not published: tier, but no amount", [c.tier, c.published_prize_per_winner], ["頭獎", undefined]);
+    record(c.notes.some((n) => n.includes("尚未公告")), "and the check says the amount is not published yet");
+  }
 
   log(`  ${passed} passed, ${failed} failed`);
   return failed === 0;

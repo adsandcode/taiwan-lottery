@@ -49,6 +49,7 @@ export function formatDraw(r: DrawResult): string {
   }
   if (d.big_small !== undefined || d.odd_even !== undefined)
     lines.push(`猜大小：${d.big_small ?? "無（兩邊都未達 13 個）"}　猜單雙：${d.odd_even ?? "無（兩邊都未達 13 個）"}`);
+  if (d.prizes_pending) lines.push("獎項：尚未公告（台灣彩券官網 22:00 公告開獎結果）");
   lines.push(...prizeLines(d.prizes));
   if (d.sales_amount !== undefined) lines.push(`銷售金額：${money(d.sales_amount)} 元`);
   if (d.redeem_deadline) lines.push(`兌獎期限：${d.redeem_deadline}`);

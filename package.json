@@ -32,6 +32,13 @@
   "type": "module",
   "main": "dist/lib.js",
   "types": "dist/lib.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/lib.d.ts",
+      "import": "./dist/lib.js"
+    },
+    "./package.json": "./package.json"
+  },
   "bin": {
     "mcp-server-taiwan-lottery": "dist/index.js",
     "taiwan-lottery": "dist/cli.js"
@@ -46,7 +53,7 @@
     "node": ">=18"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\" && tsc",
     "selftest": "node dist/selftest.js",
     "smoke": "node scripts/smoke.mjs",
     "live-check": "node scripts/live-check.mjs",

@@ -47,6 +47,8 @@ export interface Draw {
   /** NTD, 獎金總額 as published. */
   total_prize_amount?: number;
   prizes?: Prize[];
+  /** true when the API lists every tier with 0 winners and 0 NTD: the prize results are not published yet (official time 22:00). */
+  prizes_pending?: boolean;
 }
 
 type Obj = Record<string, unknown>;
@@ -98,8 +100,10 @@ function prizesOf(def: GameDef, item: Obj): Prize[] | undefined {
   return out.length ? out : undefined;
 }
 
-function common(def: GameDef, item: Obj): Pick<Draw, "redeem_deadline" | "sales_amount" | "total_prize_amount" | "prizes"> {
-  const out: Pick<Draw, "redeem_deadline" | "sales_amount" | "total_prize_amount" | "prizes"> = {};
+type Common = Pick<Draw, "redeem_deadline" | "sales_amount" | "total_prize_amount" | "prizes" | "prizes_pending">;
+
+function common(def: GameDef, item: Obj): Common {
+  const out: Common = {};
   if (typeof item.redeemableDate === "string" && /^\d{4}-\d{2}-\d{2}/.test(item.redeemableDate))
     out.redeem_deadline = item.redeemableDate.slice(0, 10);
   const sales = optNum(item.sellAmount);
@@ -107,7 +111,15 @@ function common(def: GameDef, item: Obj): Pick<Draw, "redeem_deadline" | "sales_
   const total = optNum(item.totalAmount);
   if (total !== undefined) out.total_prize_amount = total;
   const prizes = prizesOf(def, item);
-  if (prizes) out.prizes = prizes;
+  // Every tier at 0 winners and 0 NTD is not a result: it is how a draw looks before the official prize
+  // announcement (22:00). Passing that on as a table would read as "nobody won". Zero totals go with it.
+  if (prizes && prizes.every((p) => p.winners === 0 && p.prize_per_winner === 0)) {
+    out.prizes_pending = true;
+    if (out.total_prize_amount === 0) delete out.total_prize_amount;
+    if (out.sales_amount === 0) delete out.sales_amount;
+  } else if (prizes) {
+    out.prizes = prizes;
+  }
   return out;
 }
 

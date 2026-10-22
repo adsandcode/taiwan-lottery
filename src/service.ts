@@ -17,7 +17,9 @@ import { addDays, addMonths, bingoDateFromPeriod, parseDate, parseMonth, weekday
 
 export const NOTICE = "資料取自台灣彩券官方 API，一切以台灣彩券官方公告為準。";
 export const LAG_NOTE =
-  "官方資料不是即時的：台灣彩券官網常見問題寫明每晚 21:30 公告獎號、22:00 公告開獎結果。開獎後 20 分鐘以上還查不到當期是正常的，請稍後再查。";
+  "官方資料不是即時的：台灣彩券官網常見問題寫明每晚 21:30 公告當日獎號、22:00 公告開獎結果（各獎項注數與獎金）。21:30 以前查不到當期是正常的，22:00 以前可能還沒有獎金資料。";
+export const PRIZES_PENDING_NOTE =
+  "這一期的獎金尚未公告（台灣彩券官網 22:00 公告開獎結果），目前只有號碼；這不代表沒有人中獎，請 22:00 以後再查。";
 export const BINGO_NOTE = "賓果賓果每 5 分鐘開獎一期，最新一期以台灣彩券官網即時公告為準。";
 
 const discontinuedNote = (def: GameDef) =>
@@ -126,6 +128,7 @@ export class LotteryService {
     const def = this.game(args.game);
     const draw = await this.latestOf(def);
     const notes = def.kind === "bingo" ? [BINGO_NOTE] : def.active ? [LAG_NOTE] : [];
+    if (draw.prizes_pending) notes.unshift(PRIZES_PENDING_NOTE);
     return envelope(def, "latest", { weekday: weekdayOf(draw.date), draw }, notes);
   }
 
@@ -146,14 +149,16 @@ export class LotteryService {
       const found = page.draws.find((d) => d.date === date);
       if (!found) {
         const days = def.schedule ? `${def.name}的開獎日是${def.schedule.days}。` : "";
-        const today = date === this.client.today() ? "如果是今天的開獎，官方資料可能還沒更新。" : "";
+        const today = date === this.client.today() ? "如果是今天的開獎：台灣彩券官網 21:30 才公告當日獎號，請晚點再查。" : "";
         throw new NotFoundError(`${date}（${weekdayOf(date)}）沒有${def.name}的開獎資料。${days}${today}`);
       }
       draw = found;
     } else {
       throw new InputError("請給 period（期別）或 date（YYYY-MM-DD）其中一個。");
     }
-    return envelope(def, "draw", { weekday: weekdayOf(draw.date), draw }, def.active && def.kind !== "bingo" ? [LAG_NOTE] : []);
+    const notes = def.active && def.kind !== "bingo" ? [LAG_NOTE] : [];
+    if (draw.prizes_pending) notes.unshift(PRIZES_PENDING_NOTE);
+    return envelope(def, "draw", { weekday: weekdayOf(draw.date), draw }, notes);
   }
 
   async listDraws(args: { game: unknown; month?: unknown; last_n?: unknown; date?: unknown }) {
@@ -205,6 +210,8 @@ export class LotteryService {
       notes.push(`沒有指定期別，這裡對的是官方資料裡最新的一期（第 ${draw.period} 期，${draw.date}）。請確認和彩券上的期別相同。`);
     if (!hasPeriod && def.active) notes.push(def.kind === "bingo" ? BINGO_NOTE : LAG_NOTE);
     if (result.note) notes.push(result.note);
+    if (draw.prizes_pending && result.won) notes.push("本期獎金尚未公告（台灣彩券官網 22:00 公告開獎結果），每注金額請 22:00 以後再查。");
+    else if (draw.prizes_pending) notes.push(PRIZES_PENDING_NOTE);
     notes.push("對獎結果僅供參考，兌獎以彩券本身及台灣彩券官方兌獎結果為準。");
 
     const drawn = dropUndefined({

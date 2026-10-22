@@ -10,7 +10,7 @@
  * until a version is published and immutable, so it is checked here.
  */
 import { readFileSync, existsSync, readdirSync } from "node:fs";
-import { spawn } from "node:child_process";
+import { spawn, spawnSync } from "node:child_process";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { dirname, resolve } from "node:path";
 
@@ -85,6 +85,44 @@ if (existsSync(resolve(root, "README.md")) && existsSync(resolve(root, "dist/too
   for (const id of GAME_IDS) if (!readme.includes("`" + id + "`")) problems.push(`README.md does not list the game id \`${id}\``);
   if (!readme.includes("以台灣彩券官方公告為準")) problems.push("README.md is missing 以台灣彩券官方公告為準");
   if (!readme.includes("獨立")) problems.push("README.md must say that each draw is independent");
+  // The delay follows the official FAQ only; a single observation must be labelled as one.
+  if (readme.includes("20 分鐘以上")) problems.push("README.md still claims a 20-minute delay; use the official 21:30 / 22:00 times");
+  if (!readme.includes("21:30 以前")) problems.push("README.md must say that before 21:30 the day's draw is normally missing");
+  if (readme.includes("20:53") && !readme.includes("一次觀察")) problems.push("README.md: the 20:53 note must be marked as a one-time observation (一次觀察)");
+  // Say plainly what the links are.
+  const host = new URL(AI_TOOL_PAGE).host;
+  if (!new RegExp(`${host.replace(/\./g, "\\.")}[^\\n]*廣告`).test(readme)) problems.push(`README.md must say in Chinese that ${host} carries ads`);
+  if (!new RegExp(`${host.replace(/\./g, "\\.")}[^\\n]*\\bads\\b`).test(readme)) problems.push(`README.md must say in English that ${host} carries ads`);
+  // Node 18: the SDK pulls in a package that declares Node 20.
+  for (const word of ["EBADENGINE", "engine-strict", "Node.js 20"])
+    if (!readme.includes(word)) problems.push(`README.md must explain the Node 18 install warning (missing "${word}")`);
+}
+
+// What npm would actually publish: no source maps pointing at src/ that is not shipped, no src/, fixtures included.
+{
+  const r = spawnSync("npm pack --dry-run --json --ignore-scripts", { cwd: root, encoding: "utf8", shell: true });
+  let files = null;
+  try { files = JSON.parse(r.stdout)[0].files.map((f) => f.path); } catch { problems.push(`npm pack --dry-run failed: ${(r.stderr || "").slice(0, 200)}`); }
+  if (files) {
+    const maps = files.filter((f) => f.endsWith(".map"));
+    if (maps.length) problems.push(`the package would ship ${maps.length} source map(s) pointing at src/, which is not published (e.g. ${maps[0]})`);
+    if (files.some((f) => f.startsWith("src/"))) problems.push("the package would ship src/");
+    if (!files.some((f) => f.startsWith("fixtures/"))) problems.push("the package would not ship fixtures/ (the selftest needs it)");
+  }
+}
+
+// "exports" must point at the side-effect-free library, and importing the package by name must work.
+{
+  const dot = pkg.exports?.["."];
+  if (!dot) problems.push('package.json has no "exports" entry for "."');
+  else {
+    if (dot.import !== "./" + pkg.main) problems.push(`exports["."].import "${dot.import}" differs from main "${pkg.main}"`);
+    if (dot.types !== "./" + pkg.types) problems.push(`exports["."].types "${dot.types}" differs from types "${pkg.types}"`);
+  }
+  // Inside the package directory Node resolves the package's own name through "exports" (self-reference).
+  const probe = `const m = await import(${JSON.stringify(pkg.name)}); process.stdout.write(typeof m.checkTicket);`;
+  const r = spawnSync(process.execPath, ["--input-type=module", "-e", probe], { cwd: root, encoding: "utf8", timeout: 10_000 });
+  if (r.stdout !== "function") problems.push(`import ${JSON.stringify(pkg.name)} does not resolve to the library (${(r.stderr || "").split("\n").find((l) => l.includes("Error")) ?? r.stdout})`);
 }
 
 // `main` is what `import "mcp-server-taiwan-lottery"` loads. It must have no

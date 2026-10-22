@@ -81,23 +81,33 @@ export function readTicket(game: GameId, numbers: unknown, secondZone?: unknown)
   const shape = ticketShape(def);
   let list: number[];
   if (typeof numbers === "string") {
+    // NFKC turns full-width digits, the full-width comma and the ideographic space into their ASCII forms.
     const s = numbers.normalize("NFKC").trim();
+    // Only digits, whitespace, "," and "、" are allowed. Anything else (".", "-", "×", letters) is an error,
+    // never a separator: "3.8 14 23 28" is four numbers written wrong, not five numbers.
+    const unknown = [...new Set(s.replace(/[\s,、0-9]/g, ""))];
+    if (unknown.length)
+      throw new InputError(
+        `號碼只能寫數字，號碼之間用空白、逗號或頓號（、）隔開。看不懂的字元：${unknown.map((c) => `「${c}」`).join("")}。`,
+      );
+    const tokens = s.split(/[\s,、]+/).filter(Boolean);
     if (shape.digits) {
-      const digits = s.replace(/[\s,，、\-]/g, "");
-      if (!/^\d+$/.test(digits)) throw new InputError(`${def.name}請輸入 ${shape.digits} 位數字，例如 ${"0123456789".slice(0, shape.digits)}。`);
-      list = [...digits].map(Number);
+      const example = "0123456789".slice(0, shape.digits);
+      if (tokens.length === 1) list = [...tokens[0]].map(Number);
+      else if (tokens.every((t) => t.length === 1)) list = tokens.map(Number);
+      else throw new InputError(`${def.name}請直接寫 ${shape.digits} 位數字（例如 ${example}），或每一位用空白隔開（例如 ${[...example].join(" ")}）。`);
     } else {
-      const parts = s.split(/[^0-9]+/).filter(Boolean);
-      list = parts.map(Number);
+      list = tokens.map(Number);
     }
   } else if (Array.isArray(numbers)) {
-    list = numbers.map((n) => (typeof n === "string" && /^\s*\d+\s*$/.test(n) ? Number(n) : n)) as number[];
+    list = numbers.map((n) => {
+      if (typeof n === "number" && Number.isInteger(n)) return n;
+      if (typeof n === "string" && /^\d+$/.test(n.normalize("NFKC").trim())) return Number(n.normalize("NFKC").trim());
+      throw new InputError(`每個號碼都要是整數，這個看不懂：${JSON.stringify(n)}。`);
+    });
   } else {
     throw new InputError("numbers 要是號碼陣列，或用空白、逗號分隔的字串。");
   }
-
-  if (!list.every((n) => typeof n === "number" && Number.isInteger(n)))
-    throw new InputError("號碼只能是整數。");
   const count =
     shape.countMin === shape.countMax ? `${shape.countMin} 個` : `${shape.countMin}~${shape.countMax} 個`;
   if (list.length < shape.countMin || list.length > shape.countMax)

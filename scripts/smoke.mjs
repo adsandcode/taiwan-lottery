@@ -95,6 +95,12 @@ const lost = await call(client, "check_ticket", { game: "539", numbers: "01 02 0
 expect("check_ticket 539 no prize", [lost.body.tier, lost.body.won, lost.body.matched_count], [null, false, 0]);
 const badTicket = await call(client, "check_ticket", { game: "539", numbers: [1, 2, 3] });
 expect("check_ticket with three numbers is an input error", [badTicket.isError, badTicket.body.kind], [true, "input"]);
+for (const numbers of ["3.8 14 23 28", "-3 8 14 23 28", "3 8 14 23 28 ×"]) {
+  const r = await call(client, "check_ticket", { game: "539", numbers });
+  expect(`check_ticket ${JSON.stringify(numbers)} is refused, not judged`, [r.isError, r.body.kind, r.body.tier], [true, "input", undefined]);
+}
+const host = new URL((await load("links.js")).COMPANION_SITE).host;
+check("every tool description names the linked site and says it has ads", tools.every((t) => t.description.includes(host) && t.description.includes("ads") && t.description.includes("廣告")));
 
 const stats = await call(client, "number_stats", { game: "539", last_n: 5 });
 expect("number_stats", [stats.body.draws_analyzed, stats.body.most_frequent], [5, [4, 8, 15, 28, 36]]);
@@ -150,6 +156,8 @@ const c8 = cli(["stats", "539", "--last", "5"]);
 check("stats prints the independence note", c8.code === 0 && c8.out.includes("獨立"), `exit ${c8.code}`);
 const c9 = cli(["latest", "539", "--bogus"]);
 expect("an unknown option exits 2", c9.code, 2);
+const c10 = cli(["check", "539", "-1", "2", "3", "4", "5"]);
+check("check 539 -1 2 3 4 5 is refused (exit 2), not judged", c10.code === 2 && !c10.out.includes("頭獎"), `exit ${c10.code}, stdout ${JSON.stringify(c10.out.split("\n")[4] ?? "")}`);
 
 rmSync(work, { recursive: true, force: true });
 console.log(failures ? `\n${failures} smoke check(s) failed` : "\nall smoke checks passed");

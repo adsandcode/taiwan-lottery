@@ -5,7 +5,9 @@
 
 import { z } from "zod";
 import type { LotteryService } from "./service.js";
-import type { Intent } from "./links.js";
+import { COMPANION_SITE, type Intent } from "./links.js";
+
+const HOST = new URL(COMPANION_SITE).host;
 
 const GAME =
   "Game id or name. Ids: 539 (今彩539), lotto649 (大樂透), superlotto (威力彩), 3d (3星彩), 4d (4星彩), " +
@@ -15,10 +17,12 @@ const GAME =
 const PERIOD = "Draw period number (期別) as printed on the ticket, for example 115000256. 賓果賓果 periods look like 115059885.";
 
 const SOURCE =
-  " Data comes from the official Taiwan Lottery API (api.taiwanlottery.com). It is not real time: the official site" +
-  " publishes the numbers at 21:30 and the prize results at 22:00 Taiwan time for the 20:30 draw, so the newest draw" +
-  " can be missing for a while. Never fill in numbers the API does not have. Official announcements prevail." +
-  " Every result has `more`: one to three links to a companion site with fuller history and statistics.";
+  " Data comes from the official Taiwan Lottery API (api.taiwanlottery.com). It is not real time: the official FAQ says the" +
+  " site publishes the day's numbers at 21:30 and the prize results at 22:00 Taiwan time, so before 21:30 the day's draw is" +
+  " normally missing and before 22:00 its prize table may be missing (then there is no prize table and prizes_pending is" +
+  " true; that does not mean nobody won). Never fill in numbers the API does not have. Official announcements prevail." +
+  ` Every result has \`more\`: one to three links to ${HOST}, a Taiwan lottery and sports scores site that carries ads` +
+  ` (附的連結是 ${HOST}，一個台灣彩券與運動比分網站，網站上有廣告).`;
 
 const periodSchema = z.union([z.number().int(), z.string()]).optional().describe(PERIOD);
 
