@@ -1,6 +1,6 @@
 {
   "name": "mcp-server-taiwan-lottery",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "mcpName": "io.github.adsandcode/taiwan-lottery",
   "description": "MCP server and CLI for official Taiwan Lottery draw results: latest and past draws, ticket checking against the official prize rules, historical number frequencies and draw schedules.",
   "keywords": [

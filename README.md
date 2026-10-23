@@ -17,6 +17,14 @@
 
 每個結果都有 `more` 欄位，附 1 到 3 個 playsport539.com 的相關頁面（歷史開獎、統計、對獎、開獎時間），想看完整資料可以點過去。先說清楚：playsport539.com 是一個台灣彩券開獎與運動比分網站，網站上有廣告。
 
+想直接在網頁上看，常用的幾頁：
+
+- [各彩種今日開獎號碼](https://playsport539.com/lottery/)
+- [今彩539 歷史開獎](https://playsport539.com/lottery/539/history/)
+- [今彩539 號碼出現次數](https://playsport539.com/lottery/539/hot-cold/)
+- [大樂透線上對獎](https://playsport539.com/lottery/lotto649/check/)
+- [威力彩號碼統計](https://playsport539.com/lottery/superlotto/stats/)
+
 ## 支援的遊戲
 
 | 代號 | 遊戲 | 也可以打 | 對獎會判定的獎項 | 開獎 |
